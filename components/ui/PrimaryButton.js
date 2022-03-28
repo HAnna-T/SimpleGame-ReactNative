@@ -1,5 +1,5 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import Colors from "../constants/colors";
+import Colors from "../../constants/colors";
 function PrimaryButton(props) {
   return (
     <View style={styles.buttonOuterContainer}>
