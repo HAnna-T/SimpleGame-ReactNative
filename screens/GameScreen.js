@@ -10,6 +10,7 @@ import Card from "../components/ui/Card";
 
 let minBoundary = 1;
 let maxBoundary = 100;
+
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
 
@@ -50,6 +51,12 @@ function GameScreen(props) {
       props.onGameOver();
     }
   }, [currentGuess, props.userNumber, props.onGameOver]);
+
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
