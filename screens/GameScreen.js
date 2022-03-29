@@ -16,6 +16,9 @@ function generateRandomBetween(min, max, exclude) {
   }
 }
 function GameScreen(props) {
+  const initialGuess = generateRandomBetween(1, 100, props.userNumber);
+  const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
   function nextGuessHandler(direction) {
     if (
       (direction === "lower" && currentGuess < props.userNumber) ||
@@ -25,31 +28,24 @@ function GameScreen(props) {
         { text: "Sorry!", style: "cancel" },
       ]);
       return;
-    }
-    if (direction === "lower") {
+    } else if (direction === "lower") {
       maxBoundary = currentGuess;
-      const newRndNumber = generateRandomBetween(
-        minBoundary,
-        maxBoundary,
-        currentGuess
-      );
     } else {
       minBoundary = currentGuess + 1;
-
-      const newRndNumber = generateRandomBetween(
-        minBoundary,
-        maxBoundary,
-        currentGuess
-      );
-      setCurrentGuess(newRndNumber);
     }
+    const newRndNumber = generateRandomBetween(
+      minBoundary,
+      maxBoundary,
+      currentGuess
+    );
+    setCurrentGuess(newRndNumber);
   }
-  const initialGuess = generateRandomBetween(
-    minBoundary,
-    maxBoundary,
-    props.userNumber
-  );
-  const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
+  useEffect(() => {
+    if (currentGuess === props.userNumber) {
+      props.onGameOver();
+    }
+  }, [currentGuess, props.userNumber, props.onGameOver]);
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
