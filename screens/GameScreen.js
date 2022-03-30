@@ -50,7 +50,6 @@ function GameScreen(props) {
 
   useEffect(() => {
     if (currentGuess === props.userNumber) {
-      z;
       props.onGameOver();
     }
   }, [currentGuess, props.userNumber, props.onGameOver]);
@@ -87,6 +86,11 @@ function GameScreen(props) {
           {/* {guessRounds.map((guessRound) => (
             <Text key={guessRound}>{guessRound}</Text>
           ))} */}
+          <FlatList
+            data={guessRounds}
+            renderItem={(itemData) => <Text>{itemData.item}</Text>}
+            keyExtractor={(item) => item}
+          />
         </View>
       </View>
     </View>
