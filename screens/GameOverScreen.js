@@ -1,38 +1,66 @@
-import { View, Image, StyleSheet, Text, Dimensions } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 import Title from "../components/ui/Title";
 
 import Colors from "../constants/colors";
 import PrimaryButton from "../components/ui/PrimaryButton";
 
-const deviceWidth = Dimensions.get("window").width;
+// const deviceWidth = Dimensions.get("window").width;
 function GameOverScreen(props) {
+  const { width, height } = useWindowDimensions();
+  let imageSize = 300;
+
+  if (width < 380) {
+    imageSize = 150;
+  }
+  if (height < 400) {
+    imageSize = 80;
+  }
+
+  const imageStyle = {
+    width: imageSize,
+    height: imageSize,
+    borderRadius: imageSize / 2,
+  };
+
   return (
-    <View style={styles.rootContainer}>
-      <Title>Game Over!</Title>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={require("../assets/images/success.png")}
-        />
+    <ScrollView style={styles.screen}>
+      <View style={styles.rootContainer}>
+        <Title>Game Over!</Title>
+        <View style={[styles.imageContainer, imageStyle]}>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/success.png")}
+          />
+        </View>
+        <View>
+          <Text style={styles.summaryText}>
+            Your phone needed{" "}
+            <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds to
+            guess the number{" "}
+            <Text style={styles.highlight}>{props.userNumber}</Text>
+          </Text>
+          <PrimaryButton onPress={props.onStartNewGame}>
+            Start New Game
+          </PrimaryButton>
+        </View>
       </View>
-      <View>
-        <Text style={styles.summaryText}>
-          Your phone needed{" "}
-          <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds to
-          guess the number{" "}
-          <Text style={styles.highlight}>{props.userNumber}</Text>
-        </Text>
-        <PrimaryButton onPress={props.onStartNewGame}>
-          Start New Game
-        </PrimaryButton>
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
 export default GameOverScreen;
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   rootContainer: {
     flex: 1,
     padding: 24,
@@ -40,9 +68,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageContainer: {
-    width: deviceWidth < 380 ? 150 : 300,
-    height: deviceWidth < 380 ? 150 : 300,
-    borderRadius: deviceWidth < 380 ? 75 : 150,
+    // width: deviceWidth < 380 ? 150 : 300,
+    // height: deviceWidth < 380 ? 150 : 300,
+    // borderRadius: deviceWidth < 380 ? 75 : 150,
     borderWidth: 3,
     borderColor: Colors.primary800,
     overflow: "hidden",
