@@ -7,6 +7,7 @@ import InstructionText from "../components/ui/InstructionText";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 import Card from "../components/ui/Card";
+import GuessLogItem from "../components/game/GuessLogItem";
 
 let minBoundary = 1;
 let maxBoundary = 100;
@@ -58,7 +59,7 @@ function GameScreen(props) {
     minBoundary = 1;
     maxBoundary = 100;
   }, []);
-
+  const guessRoundsListLength = guessRounds.length;
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
@@ -83,12 +84,14 @@ function GameScreen(props) {
           </View>
         </Card>
         <View>
-          {/* {guessRounds.map((guessRound) => (
-            <Text key={guessRound}>{guessRound}</Text>
-          ))} */}
           <FlatList
             data={guessRounds}
-            renderItem={(itemData) => <Text>{itemData.item}</Text>}
+            renderItem={(itemData) => (
+              <GuessLogItem
+                roundNumber={guessRoundsListLength - itemData.index}
+                guess={itemData.item}
+              />
+            )}
             keyExtractor={(item) => item}
           />
         </View>
