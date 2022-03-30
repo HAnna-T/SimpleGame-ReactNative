@@ -51,7 +51,7 @@ function GameScreen(props) {
 
   useEffect(() => {
     if (currentGuess === props.userNumber) {
-      props.onGameOver();
+      props.onGameOver(guessRounds.length);
     }
   }, [currentGuess, props.userNumber, props.onGameOver]);
 
@@ -115,5 +115,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
   },
 });
